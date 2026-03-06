@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-03-06 Fri 10:22 -->
+<!-- 2026-03-06 Fri 10:33 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>An imperfect cookbook on ggplot</title>
@@ -192,7 +192,7 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   .org-svg { }
 </style>
-<link rel="stylesheet" href="minimal.css" type="text/css"/>
+<link rel="stylesheet" href="styling.css" type="text/css"/>
 </head>
 <body>
 <div id="content" class="content">
@@ -222,29 +222,29 @@ take them for what they are: scribbles on my own exploration of how
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2682f42">1. Bar chart highlighted lowest and highest bars</a>
+<li><a href="#org8322753">1. Bar chart highlighted lowest and highest bars</a>
 <ul>
-<li><a href="#org24268cd">1.1. Bar chart with colours</a></li>
-<li><a href="#org6520225">1.2. Adding labels</a></li>
+<li><a href="#orge63fe08">1.1. Bar chart with colours</a></li>
+<li><a href="#org55a2405">1.2. Adding labels</a></li>
 </ul>
 </li>
 <li><a href="#stacked-bar-chart">2. Positioning labels on a stacked bar chart</a>
 <ul>
-<li><a href="#orge8567b2">But wait&hellip; What about <code>position_stack()</code></a></li>
-<li><a href="#orgb978d5e">So let&rsquo;s also learn about <code>position_dodge()</code></a></li>
+<li><a href="#org5f3844f">But wait&hellip; What about <code>position_stack()</code></a></li>
+<li><a href="#org890a477">So let&rsquo;s also learn about <code>position_dodge()</code></a></li>
 </ul>
 </li>
-<li><a href="#org5ef0302">3. From summarized counts to a jittered dotplot</a></li>
-<li><a href="#org04f70c4">4. Using <code>after_stat()</code> to add labels to a bar chart</a></li>
+<li><a href="#org01b9552">3. From summarized counts to a jittered dotplot</a></li>
+<li><a href="#orged92dd9">4. Using <code>after_stat()</code> to add labels to a bar chart</a></li>
 </ul>
 </div>
 </nav>
-<div id="outline-container-org2682f42" class="outline-2">
-<h2 id="org2682f42"><span class="section-number-2">1.</span> Bar chart highlighted lowest and highest bars</h2>
+<div id="outline-container-org8322753" class="outline-2">
+<h2 id="org8322753"><span class="section-number-2">1.</span> Bar chart highlighted lowest and highest bars</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org24268cd" class="outline-3">
-<h3 id="org24268cd"><span class="section-number-3">1.1.</span> Bar chart with colours</h3>
+<div id="outline-container-orge63fe08" class="outline-3">
+<h3 id="orge63fe08"><span class="section-number-3">1.1.</span> Bar chart with colours</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 A bar graph that highlights the highest &amp; lowest values? We can use
@@ -324,7 +324,7 @@ g
 </div>
 
 
-<figure id="orgca0694b">
+<figure id="org1de7c40">
 <img src="img/bar-hi-1.png" alt="bar-hi-1.png">
 
 </figure>
@@ -362,7 +362,7 @@ now apply this to alter the filling of the bars, like so:
 </div>
 
 
-<figure id="org1ec0325">
+<figure id="org257c0ae">
 <img src="img/bar-hi-2.png" alt="bar-hi-2.png">
 
 </figure>
@@ -373,8 +373,8 @@ That&rsquo;s all there is to it! It&rsquo;s obviously trivial to alter the
 </p>
 </div>
 </div>
-<div id="outline-container-org6520225" class="outline-3">
-<h3 id="org6520225"><span class="section-number-3">1.2.</span> Adding labels</h3>
+<div id="outline-container-org55a2405" class="outline-3">
+<h3 id="org55a2405"><span class="section-number-3">1.2.</span> Adding labels</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 To add labels to these bars, we can create a new variable in our
@@ -452,7 +452,7 @@ Our full graph then becomes:
 </div>
 
 
-<figure id="org89a6b5e">
+<figure id="orge42c3af">
 <img src="img/bar-hi-3.png" alt="bar-hi-3.png">
 
 </figure>
@@ -555,7 +555,7 @@ g +
 </div>
 
 
-<figure id="org68a428c">
+<figure id="org2e9ad00">
 <img src="img/bar-chart-1.png" alt="bar-chart-1.png">
 
 </figure>
@@ -669,14 +669,14 @@ g2 +
 </div>
 
 
-<figure id="org2e97fab">
+<figure id="org0683dd3">
 <img src="img/bar-chart-2.png" alt="bar-chart-2.png">
 
 </figure>
 </div>
-<div id="outline-container-orge8567b2" class="outline-3">
-<h3 id="orge8567b2">But wait&hellip; What about <code>position_stack()</code></h3>
-<div class="outline-text-3" id="text-orge8567b2">
+<div id="outline-container-org5f3844f" class="outline-3">
+<h3 id="org5f3844f">But wait&hellip; What about <code>position_stack()</code></h3>
+<div class="outline-text-3" id="text-org5f3844f">
 <p>
 Oh no, I just found out there&rsquo;s an even easier way to do this, by
 giving <code>position</code> instructions to the <code>geom_label()</code>. It recognises
@@ -693,7 +693,7 @@ g3 +
 </div>
 
 
-<figure id="orga997eec">
+<figure id="org3600fb7">
 <img src="img/bar-chart-3.png" alt="bar-chart-3.png">
 
 </figure>
@@ -719,15 +719,15 @@ appealing, but we can set position also with a function:
 </div>
 
 
-<figure id="org47ea869">
+<figure id="orgf6c4dad">
 <img src="img/bar-chart-4.png" alt="bar-chart-4.png">
 
 </figure>
 </div>
 </div>
-<div id="outline-container-orgb978d5e" class="outline-3">
-<h3 id="orgb978d5e">So let&rsquo;s also learn about <code>position_dodge()</code></h3>
-<div class="outline-text-3" id="text-orgb978d5e">
+<div id="outline-container-org890a477" class="outline-3">
+<h3 id="org890a477">So let&rsquo;s also learn about <code>position_dodge()</code></h3>
+<div class="outline-text-3" id="text-org890a477">
 <p>
 To switch from a stacked bar plot to a multi bar plot, adjust
 <code>position</code> to <code>"dodge"</code>.
@@ -741,7 +741,7 @@ g4
 </div>
 
 
-<figure id="orgf8c225e">
+<figure id="org462e41f">
 <img src="img/bar-chart-5.png" alt="bar-chart-5.png">
 
 </figure>
@@ -759,15 +759,15 @@ Adjust width value to the default column widths.
 </div>
 
 
-<figure id="org716e92f">
+<figure id="org8827dfd">
 <img src="img/bar-chart-6.png" alt="bar-chart-6.png">
 
 </figure>
 </div>
 </div>
 </div>
-<div id="outline-container-org5ef0302" class="outline-2">
-<h2 id="org5ef0302"><span class="section-number-2">3.</span> From summarized counts to a jittered dotplot</h2>
+<div id="outline-container-org01b9552" class="outline-2">
+<h2 id="org01b9552"><span class="section-number-2">3.</span> From summarized counts to a jittered dotplot</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 It&rsquo;s sometimes nice to have a graph where each dot represents an
@@ -964,7 +964,7 @@ g
 </div>
 
 
-<figure id="org2eb6b72">
+<figure id="org776ee23">
 <img src="img/count-to-jitter-1.png" alt="count-to-jitter-1.png">
 
 </figure>
@@ -982,14 +982,14 @@ df</code> in <code>geom_label()</code>.
 </div>
 
 
-<figure id="org5adc4e0">
+<figure id="orgaa2ff37">
 <img src="img/count-to-jitter-2.png" alt="count-to-jitter-2.png">
 
 </figure>
 </div>
 </div>
-<div id="outline-container-org04f70c4" class="outline-2">
-<h2 id="org04f70c4"><span class="section-number-2">4.</span> Using <code>after_stat()</code> to add labels to a bar chart</h2>
+<div id="outline-container-orged92dd9" class="outline-2">
+<h2 id="orged92dd9"><span class="section-number-2">4.</span> Using <code>after_stat()</code> to add labels to a bar chart</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Once again, we need some dummy data first. Let&rsquo;s whip up a dataframe
@@ -1038,7 +1038,7 @@ p
 </div>
 
 
-<figure id="org5cd2351">
+<figure id="org3683e67">
 <img src="img/bar-simple-1.png" alt="bar-simple-1.png">
 
 </figure>
@@ -1093,7 +1093,7 @@ q
 </div>
 
 
-<figure id="orgc4b0291">
+<figure id="org2b6cab4">
 <img src="img/bar-simple-2.png" alt="bar-simple-2.png">
 
 </figure>
@@ -1129,7 +1129,7 @@ For more detailed information on <code>after_stat()</code>, see
 <div id="postamble" class="status">
 <p class='author'>Author: Elias Storms</p>
 
-    <p class='date'>Modified: 2026-03-06 Fri 10:22</p>
+    <p class='date'>Modified: 2026-03-06 Fri 10:31</p>
 
     <p class='creator'><a href="https://www.gnu.org/software/emacs/">Emacs</a> 31.0.50 (<a href="https://orgmode.org">Org</a> mode 9.8)</p>
 </div>
