@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2026-03-06 Fri 10:22 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>An imperfect cookbook on ggplot</title>
+<meta name="author" content="Elias Storms" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-c:before { content: 'C'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'JavaScript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" href="minimal.css" type="text/css"/>
+</head>
+<body>
+<div id="content" class="content">
+<header>
+<h1 class="title">An imperfect cookbook on ggplot</h1>
+</header><p>
+These notes began as personal "recipes" for doing simple things with
+ggplot in R. When I started preparing them to be shared, I realised they
+included some subpar advice.
+</p>
+
+<p>
+After the first note turned into a post about how not to do things
+(<a href="#stacked-bar-chart">Positioning labels on a stacked bar chart</a>, see below), I changed my
+approach. Rather than aiming for "best practice," these notes now
+reflect my own learning process in R.
+</p>
+
+<p>
+I’m sharing them in the hope that other (especially
+beginner-to-intermediate) R users might learn from them. So please
+take them for what they are: scribbles on my own exploration of how
+(not) to do things in R.
+</p>
+
+<nav id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org2682f42">1. Bar chart highlighted lowest and highest bars</a>
+<ul>
+<li><a href="#org24268cd">1.1. Bar chart with colours</a></li>
+<li><a href="#org6520225">1.2. Adding labels</a></li>
+</ul>
+</li>
+<li><a href="#stacked-bar-chart">2. Positioning labels on a stacked bar chart</a>
+<ul>
+<li><a href="#orge8567b2">But wait&hellip; What about <code>position_stack()</code></a></li>
+<li><a href="#orgb978d5e">So let&rsquo;s also learn about <code>position_dodge()</code></a></li>
+</ul>
+</li>
+<li><a href="#org5ef0302">3. From summarized counts to a jittered dotplot</a></li>
+<li><a href="#org04f70c4">4. Using <code>after_stat()</code> to add labels to a bar chart</a></li>
+</ul>
+</div>
+</nav>
+<div id="outline-container-org2682f42" class="outline-2">
+<h2 id="org2682f42"><span class="section-number-2">1.</span> Bar chart highlighted lowest and highest bars</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org24268cd" class="outline-3">
+<h3 id="org24268cd"><span class="section-number-3">1.1.</span> Bar chart with colours</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+A bar graph that highlights the highest &amp; lowest values? We can use
+<code>scale_fill_manual()</code> for colours and add labels to the same bars.
+</p>
+
+<p>
+First, some data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code><span class="org-ess-modifiers">library</span>(<span class="org-string">"tidyverse"</span>)
+<span class="org-ess-modifiers">library</span>(<span class="org-string">"ggplot2"</span>)
+
+df <span class="org-ess-assignment">&lt;-</span> data.frame(name =  c(<span class="org-string">"A"</span>, <span class="org-string">"B"</span>, <span class="org-string">"C"</span>, <span class="org-string">"D"</span>, <span class="org-string">"E"</span>),
+                 count = sample(20:100, size = 5))
+</code></pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">A</td>
+<td class="org-right">46</td>
+</tr>
+
+<tr>
+<td class="org-left">B</td>
+<td class="org-right">91</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-right">73</td>
+</tr>
+
+<tr>
+<td class="org-left">D</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-left">E</td>
+<td class="org-right">68</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The base bar chart is pretty straightforward. 
+</p>
+
+<p>
+Note that we already map a <code>fill</code> in the <code>aes()</code> definition, even
+though it is not the colour we want. However, it&rsquo;s crucial to make
+this mapping, so that <code>scale_fill_manual()</code> can override it later.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g <span class="org-ess-assignment">&lt;-</span> ggplot(df, aes(x = name, y = count, fill = name)) +
+  geom_col()
+g
+</code></pre>
+</div>
+
+
+<figure id="orgca0694b">
+<img src="img/bar-hi-1.png" alt="bar-hi-1.png">
+
+</figure>
+
+<p>
+To add colours to only the highest and lowest values of the bar chart,
+we can create a separate vector.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>colour_palette <span class="org-ess-assignment">&lt;-</span> case_when(df$count == min(df$count) ~ <span class="org-string">"darkred"</span>,
+                            df$count == max(df$count) ~ <span class="org-string">"darkgreen"</span>,
+                            <span class="org-ess-constant">TRUE</span> ~ <span class="org-string">"gray60"</span>)
+colour_palette
+</code></pre>
+</div>
+
+<pre class="example">
+gray60
+darkgreen
+gray60
+darkred
+gray60
+</pre>
+
+<p>
+This vector lists the colours we need to fill the bars with. We can
+now apply this to alter the filling of the bars, like so:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g +
+  scale_fill_manual(values = colour_palette)
+</code></pre>
+</div>
+
+
+<figure id="org1ec0325">
+<img src="img/bar-hi-2.png" alt="bar-hi-2.png">
+
+</figure>
+
+<p>
+That&rsquo;s all there is to it! It&rsquo;s obviously trivial to alter the
+<code>case_when()</code> triage to create different custom colour palette.
+</p>
+</div>
+</div>
+<div id="outline-container-org6520225" class="outline-3">
+<h3 id="org6520225"><span class="section-number-3">1.2.</span> Adding labels</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+To add labels to these bars, we can create a new variable in our
+dataframe.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>df <span class="org-ess-assignment">&lt;-</span> df |&gt;
+  mutate(label = case_when(count == min(df$count) ~ count,
+                           count == max(df$count) ~ count))
+</code></pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-right">count</th>
+<th scope="col" class="org-right">label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">A</td>
+<td class="org-right">46</td>
+<td class="org-right">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="org-left">B</td>
+<td class="org-right">91</td>
+<td class="org-right">91</td>
+</tr>
+
+<tr>
+<td class="org-left">C</td>
+<td class="org-right">73</td>
+<td class="org-right">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="org-left">D</td>
+<td class="org-right">23</td>
+<td class="org-right">23</td>
+</tr>
+
+<tr>
+<td class="org-left">E</td>
+<td class="org-right">68</td>
+<td class="org-right">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Next, we add <code>geom_text()</code> layer to our graph.
+Our full graph then becomes:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>ggplot(df, aes(x = name, y = count, fill = name, label = label)) +
+  geom_col() +
+  geom_text(vjust = -.8) +
+  scale_fill_manual(values = colour_palette)
+</code></pre>
+</div>
+
+
+<figure id="org89a6b5e">
+<img src="img/bar-hi-3.png" alt="bar-hi-3.png">
+
+</figure>
+</div>
+</div>
+</div>
+<div id="outline-container-stacked-bar-chart" class="outline-2">
+<h2 id="stacked-bar-chart"><span class="section-number-2">2.</span> Positioning labels on a stacked bar chart</h2>
+<div class="outline-text-2" id="text-stacked-bar-chart">
+<p>
+How to create a stacked bar chart with correctly positioned labels.
+Or: creating the same plot twice.
+</p>
+
+<p>
+Let&rsquo;s start with some dummy data in long form.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code><span class="org-ess-modifiers">library</span>(<span class="org-string">"tidyverse"</span>)
+<span class="org-ess-modifiers">library</span>(<span class="org-string">"ggplot2"</span>)
+
+df <span class="org-ess-assignment">&lt;-</span> data.frame(year  = c(<span class="org-string">"2000"</span>, <span class="org-string">"2000"</span>, <span class="org-string">"2000"</span>,
+                           <span class="org-string">"1999"</span>, <span class="org-string">"1999"</span>, <span class="org-string">"1999"</span>),
+                 type  = c(<span class="org-string">"A"</span>, <span class="org-string">"B"</span>, <span class="org-string">"C"</span>,
+                           <span class="org-string">"A"</span>, <span class="org-string">"B"</span>, <span class="org-string">"C"</span>),
+                 count = c(20,  60,  90,
+                           30,  50, 70))
+</code></pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">year</th>
+<th scope="col" class="org-left">type</th>
+<th scope="col" class="org-right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">20</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">60</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">C</td>
+<td class="org-right">90</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">A</td>
+<td class="org-right">30</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">B</td>
+<td class="org-right">50</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">C</td>
+<td class="org-right">70</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+In a normal stacked bar chart, labels will not be positioned correctly:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g <span class="org-ess-assignment">&lt;-</span> ggplot(df, aes(x = year, y = count)) +
+  geom_col(aes(fill = type))
+
+g +
+  geom_label(aes(label = count)) +
+  labs(title = <span class="org-string">"Oops"</span>)
+</code></pre>
+</div>
+
+
+<figure id="org68a428c">
+<img src="img/bar-chart-1.png" alt="bar-chart-1.png">
+
+</figure>
+
+<p>
+The reason is pretty obvious, as <code>geom_label()</code> uses <code>count</code> as
+y-value rather than stacking the labels.
+</p>
+
+<p>
+To fix this, we can calculate y-values separately.
+</p>
+
+<p>
+Let&rsquo;s add a column to the data frame, like so:
+</p>
+<ol class="org-ol">
+<li>ensure the data is grouped by x-axis, so that you calculate for
+each bar of the bar chart,</li>
+<li>sort your date by both x-axis and fill grouping,</li>
+<li>calculate the middle height of each block as <code>cumsum(count) -
+    count /2</code>.</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>df2 <span class="org-ess-assignment">&lt;-</span> df |&gt;
+  group_by(year) |&gt;
+  arrange(year, desc(type)) |&gt;
+  mutate(label_y = cumsum(count) - count/2)
+df2
+</code></pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-right">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">year</th>
+<th scope="col" class="org-left">type</th>
+<th scope="col" class="org-right">count</th>
+<th scope="col" class="org-right">label_y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">C</td>
+<td class="org-right">70</td>
+<td class="org-right">35</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">B</td>
+<td class="org-right">50</td>
+<td class="org-right">95</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">A</td>
+<td class="org-right">30</td>
+<td class="org-right">135</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">C</td>
+<td class="org-right">90</td>
+<td class="org-right">45</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">60</td>
+<td class="org-right">120</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">20</td>
+<td class="org-right">160</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+This now plots nicely when we use the calculated y-values in the
+<code>aes()</code> of <code>geom_label()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g2 <span class="org-ess-assignment">&lt;-</span> ggplot(df2, aes(x = year, y = count)) +
+  geom_col(aes(fill = type))
+
+g2 +
+  geom_label(aes(label = count, y = label_y))
+</code></pre>
+</div>
+
+
+<figure id="org2e97fab">
+<img src="img/bar-chart-2.png" alt="bar-chart-2.png">
+
+</figure>
+</div>
+<div id="outline-container-orge8567b2" class="outline-3">
+<h3 id="orge8567b2">But wait&hellip; What about <code>position_stack()</code></h3>
+<div class="outline-text-3" id="text-orge8567b2">
+<p>
+Oh no, I just found out there&rsquo;s an even easier way to do this, by
+giving <code>position</code> instructions to the <code>geom_label()</code>. It recognises
+<code>"stack"</code> as instruction.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g3 <span class="org-ess-assignment">&lt;-</span> ggplot(df, aes(x = year, y = count, group = type)) +
+  geom_col(aes(fill = type))
+
+g3 +
+  geom_label(aes(label = count), position = <span class="org-string">"stack"</span>)
+</code></pre>
+</div>
+
+
+<figure id="orga997eec">
+<img src="img/bar-chart-3.png" alt="bar-chart-3.png">
+
+</figure>
+
+<p>
+Note that we need to include <code>aes(group = )</code>, it ensures the groups
+are stacked correctly (i.e. corresponding with the <code>fill</code>
+instruction).
+</p>
+
+
+<p>
+This positions the labels at the top of each stack, which doesn&rsquo;t look
+appealing, but we can set position also with a function:
+<code>position_stack()</code>, where <code>vjust = .5</code> centers the labels vertically.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g3 + 
+  geom_label(aes(label = count),
+             position = position_stack(vjust = .5))
+</code></pre>
+</div>
+
+
+<figure id="org47ea869">
+<img src="img/bar-chart-4.png" alt="bar-chart-4.png">
+
+</figure>
+</div>
+</div>
+<div id="outline-container-orgb978d5e" class="outline-3">
+<h3 id="orgb978d5e">So let&rsquo;s also learn about <code>position_dodge()</code></h3>
+<div class="outline-text-3" id="text-orgb978d5e">
+<p>
+To switch from a stacked bar plot to a multi bar plot, adjust
+<code>position</code> to <code>"dodge"</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g4 <span class="org-ess-assignment">&lt;-</span> ggplot(df, aes(x = year, y = count, group = type)) +
+  geom_col(aes(fill = type), position = <span class="org-string">"dodge"</span>, show.legend = F)
+g4
+</code></pre>
+</div>
+
+
+<figure id="orgf8c225e">
+<img src="img/bar-chart-5.png" alt="bar-chart-5.png">
+
+</figure>
+
+<p>
+To add, labels don&rsquo;t forget to adjust <code>position</code> in the <code>geom_label()</code>.
+Adjust width value to the default column widths.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g4 +
+  geom_label(aes(label = count),
+             position = position_dodge(width = .9))
+</code></pre>
+</div>
+
+
+<figure id="org716e92f">
+<img src="img/bar-chart-6.png" alt="bar-chart-6.png">
+
+</figure>
+</div>
+</div>
+</div>
+<div id="outline-container-org5ef0302" class="outline-2">
+<h2 id="org5ef0302"><span class="section-number-2">3.</span> From summarized counts to a jittered dotplot</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+It&rsquo;s sometimes nice to have a graph where each dot represents an
+observation. That&rsquo;s where <code>geom_point()</code> and especially
+<code>geom_jitter()</code> shine. But how can we one dot per obseration when we
+start from summarized data?
+</p>
+
+<p>
+Let&rsquo;s start with some dummy data.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code><span class="org-ess-modifiers">library</span>(tidyverse)
+<span class="org-ess-modifiers">library</span>(ggplot2)
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">example data
+</span>df <span class="org-ess-assignment">&lt;-</span> data.frame(year  = c(<span class="org-string">"2000"</span>, <span class="org-string">"2000"</span>, <span class="org-string">"2000"</span>,
+                           <span class="org-string">"1999"</span>, <span class="org-string">"1999"</span>, <span class="org-string">"1999"</span>),
+                 type  = c(<span class="org-string">"A"</span>, <span class="org-string">"B"</span>, <span class="org-string">"C"</span>,
+                           <span class="org-string">"A"</span>, <span class="org-string">"B"</span>, <span class="org-string">"C"</span>),
+                 n = c(6,  63,  25,
+                       8,  <span class="org-ess-constant">NA</span>,  52))
+</code></pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">year</th>
+<th scope="col" class="org-left">type</th>
+<th scope="col" class="org-right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">63</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">C</td>
+<td class="org-right">25</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">A</td>
+<td class="org-right">8</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">B</td>
+<td class="org-right">&nbsp;</td>
+</tr>
+
+<tr>
+<td class="org-right">1999</td>
+<td class="org-left">C</td>
+<td class="org-right">52</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Our data already is in long format, but with summarized counts. To
+transform it into one row per observation (i.e., a single row for each
+count), we can use <code>uncount()</code>.
+</p>
+
+<p>
+Note that for <code>uncount()</code> to work, we need to filter out any <code>NA</code>
+values.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>dfu <span class="org-ess-assignment">&lt;-</span> df |&gt;
+  filter(!is.na(n)) |&gt;
+  uncount(n, .id = <span class="org-string">"nr"</span>)
+
+head(dfu, 10)
+</code></pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+
+<col  class="org-right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">year</th>
+<th scope="col" class="org-left">type</th>
+<th scope="col" class="org-right">nr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">4</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">A</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-right">2000</td>
+<td class="org-left">B</td>
+<td class="org-right">4</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+This data frame, with one row per observation, can now be used in a ggplot.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g <span class="org-ess-assignment">&lt;-</span> ggplot(dfu, aes(x = year, y = type)) +
+  geom_jitter(aes(colour = type), show.legend = <span class="org-ess-constant">FALSE</span>,
+              width = .2, height = .2)
+
+g
+</code></pre>
+</div>
+
+
+<figure id="org2eb6b72">
+<img src="img/count-to-jitter-1.png" alt="count-to-jitter-1.png">
+
+</figure>
+
+<p>
+If we want to include a summarised total of counts per category, we
+need to add labels from the summarised data frame by setting <code>data =
+df</code> in <code>geom_label()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>g + geom_label(data = df, aes(label = n),
+               alpha = .5, show.legend = <span class="org-ess-constant">FALSE</span>)
+</code></pre>
+</div>
+
+
+<figure id="org5adc4e0">
+<img src="img/count-to-jitter-2.png" alt="count-to-jitter-2.png">
+
+</figure>
+</div>
+</div>
+<div id="outline-container-org04f70c4" class="outline-2">
+<h2 id="org04f70c4"><span class="section-number-2">4.</span> Using <code>after_stat()</code> to add labels to a bar chart</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Once again, we need some dummy data first. Let&rsquo;s whip up a dataframe
+with 50 observations of one variable.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code><span class="org-ess-modifiers">library</span>(tidyverse)
+<span class="org-ess-modifiers">library</span>(ggplot2)
+
+df <span class="org-ess-assignment">&lt;-</span> data.frame(type = sample(c(<span class="org-string">"A"</span>, <span class="org-string">"B"</span>, <span class="org-string">"C"</span>),
+                               size = 50, replace = <span class="org-ess-constant">TRUE</span>))
+df$type <span class="org-ess-assignment">&lt;-</span> factor(df$type)
+
+str(df)
+summary(df)
+</code></pre>
+</div>
+
+<pre class="example">
+'data.frame':	50 obs. of  1 variable:
+ $ type: Factor w/ 3 levels "A","B","C": 1 1 2 1 1 3 2 1 2 2 ...
+ type  
+ A:16  
+ B:18  
+ C:16
+</pre>
+
+<p>
+When <code>ggplot</code> draws a plot, it calculates different values.
+<code>geom_bar()</code> for example, only requires either <code>x</code> or <code>y</code> values and
+will compute the other to draw the graph. These calculated statistics
+can be accessed later.
+</p>
+
+<p>
+Let&rsquo;s start with a simple bar chart.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>p <span class="org-ess-assignment">&lt;-</span> ggplot(df, aes(x = type)) +
+  geom_bar()
+
+p
+</code></pre>
+</div>
+
+
+<figure id="org5cd2351">
+<img src="img/bar-simple-1.png" alt="bar-simple-1.png">
+
+</figure>
+
+<p>
+To get an idea of what ggplot computes, we can take a look at the data
+in the object it creates. Below, <code>i = 1</code> indicates we want to look at
+the first layer.
+</p>
+
+<p>
+(Note that the <code>options()</code> line is only there so that the line width of
+the output is long enough.)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code><span class="org-ess-modifiers">options</span>(width = 200)
+layer_data(p, i = 1)
+</code></pre>
+</div>
+
+<pre class="example">
+  count prop x flipped_aes PANEL group  y ymin ymax xmin xmax colour      fill linewidth linetype alpha width
+1    16    1 1       FALSE     1     1 16    0   16 0.55 1.45     NA #595959FF       0.5        1    NA   0.9
+2    18    1 2       FALSE     1     2 18    0   18 1.55 2.45     NA #595959FF       0.5        1    NA   0.9
+3    16    1 3       FALSE     1     3 16    0   16 2.55 3.45     NA #595959FF       0.5        1    NA   0.9
+</pre>
+
+<p>
+So the <code>ggplot</code> object we created, has a variable called <code>count</code>, and
+that <code>y</code> has the same value.
+</p>
+
+<p>
+We want to add labels with the values of <code>count</code>. To access these
+values, we can use <code>after_stat()</code>, which allows the mapping of the
+values to be delayed until after <code>count</code> has been calculated. So in
+the <code>aes()</code>, we set <code>label = after_stat(count)</code>.
+</p>
+
+<p>
+Note that we also need to set <code>stat = "count"</code>, to change the
+statistical transformation the layer uses.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code>q <span class="org-ess-assignment">&lt;-</span> p +
+  geom_label(aes(label = after_stat(count)),
+             stat = <span class="org-string">"count"</span>, vjust = 1.5)
+q
+</code></pre>
+</div>
+
+
+<figure id="orgc4b0291">
+<img src="img/bar-simple-2.png" alt="bar-simple-2.png">
+
+</figure>
+
+<p>
+Let&rsquo;s take a look at the layer we just added.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><code><span class="org-ess-modifiers">options</span>(width = 200)
+layer_data(q, i = 2)
+</code></pre>
+</div>
+
+<pre class="example">
+  count prop x width flipped_aes PANEL group label  y nudge_x nudge_y colour  fill family     size angle hjust vjust alpha fontface lineheight linewidth linetype
+1    16    1 1   0.9       FALSE     1     1    16 16       0       0  black white        3.866058     0   0.5   1.5    NA        1        1.2      0.25        1
+2    18    1 2   0.9       FALSE     1     2    18 18       0       0  black white        3.866058     0   0.5   1.5    NA        1        1.2      0.25        1
+3    16    1 3   0.9       FALSE     1     3    16 16       0       0  black white        3.866058     0   0.5   1.5    NA        1        1.2      0.25        1
+</pre>
+
+<p>
+And we can see the <code>label</code> values have been added.
+</p>
+
+<p>
+For more detailed information on <code>after_stat()</code>, see
+<a href="https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/">https://yjunechoe.github.io/posts/2022-03-10-ggplot2-delayed-aes-1/</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class='author'>Author: Elias Storms</p>
+
+    <p class='date'>Modified: 2026-03-06 Fri 10:22</p>
+
+    <p class='creator'><a href="https://www.gnu.org/software/emacs/">Emacs</a> 31.0.50 (<a href="https://orgmode.org">Org</a> mode 9.8)</p>
+</div>
+</body>
+</html>
