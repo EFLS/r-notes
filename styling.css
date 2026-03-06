@@ -1,0 +1,108 @@
+/* Importing fonts */
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|IBM+Plex+Sans|Merriweather");
+
+/* Setting variables */
+:root {
+    /* Fonts */
+    --efls-font-variable: "Merriweather", serif;
+    --efls-font-fixed: "IBM Plex Sans", sans-serif;
+    /* Color variables */
+    --efls-darkest: #292432;    /* Almost black */
+    --efls-dark:    #344d5b;    /* Dark background */
+    --efls-white:   #f7f7f7;    /* Almost white */
+    --efls-bright:  #f3f3f7;    /* Bright midpoint */
+    --efls-accent:  #b95811;    /* Accent colour */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: var(--efls-darkest);
+    background-color: var(--efls-bright);
+    font-family: var(--efls-font-variable);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* #table-of-contents { */
+/*     width: 250px; */
+/*     z-index: 1; */
+/*     position: fixed; */
+/*     top: 0; */
+/*     right: 0; */
+/* } */
+/* @media (max-width: 600px) { */
+/*     #table-of-contents { position: static; width: auto; } */
+/* } */
+
+.title, .subtitle {
+    font-family: var(--efls-font-fixed);
+    text-align: left;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+}
+
+/* Ensure content wins over inline styling. */
+#content.content {
+  max-width: 800px;
+}
+
+h2 {
+    font-family: var(--efls-font-fixed);
+    font-size: 150%;
+    line-height: 1.1;
+    /* Margins & padding */
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+section {
+    margin-top: 1em;
+}
+section p {
+    margin: 0.15em 0;
+}
+section p + p {
+    text-indent: 1.5em;
+}
+
+/* LINKS */
+/* Link colors */
+a,
+a:visited {
+    color: var(--efls-accent);
+}
+
+/* In <code>, but not in <pre> */
+:not(pre) > code {
+    border: 1px solid #ddd;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 3px;
+}
+
+pre {
+    font-size: 90%;
+    background-color: var(--efls-white);
+}
+
+table {
+    margin-left: 2rem;
+    font-family: monospace;
+    border-collapse: collapse;
+}
+
+table th, table td {
+  padding: 0.2rem 0.3rem;
+  font-size: 100%;
+}
+
+/* table tr { */
+/*     font-size: 80%; */
+/* } */
+
+table thead tr { border-bottom: 1px solid #ccc; }
+table tbody tr + tr { border-top: 1px solid #eee; }
+

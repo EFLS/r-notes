@@ -1,6 +1,6 @@
 #+title: An imperfect cookbook on ggplot
 #+PROPERTY: header-args :session *r-notes* :exports both :results value verbatim
-#+HTML_HEAD: <link rel="stylesheet" href="minimal.css" type="text/css"/>
+#+HTML_HEAD: <link rel="stylesheet" href="styling.css" type="text/css"/>
 #+EXPORT_FILE_NAME: index
 #+OPTIONS: toc:nil
 
